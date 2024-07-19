@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billetes Cayendo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('img/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        .bill {
+            position: absolute;
+            top: -10%;
+            width: 100px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10%) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110%) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .search-container {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            z-index: 100;
+        }
+
+        .search-bar {
+            width: 50%;
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .youtube-logo {
+            display: block;
+            margin: 20px auto;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Buscar...">
+        <img src="img/youtube-logo.png" alt="YouTube Logo" class="youtube-logo">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const numberOfBills = 30;
+            const billImages = ['img/bill1.jpg', 'img/bill2.jpg', 'img/bill3.jpg'];
+            for (let i = 0; i < numberOfBills; i++) {
+                createBill(billImages);
+            }
+        });
+
+        function createBill(billImages) {
+            const bill = document.createElement('img');
+            const randomImageIndex = Math.floor(Math.random() * billImages.length);
+            bill.src = billImages[randomImageIndex];
+            bill.classList.add('bill');
+            bill.style.left = `${Math.random() * 100}vw`;
+            bill.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            bill.style.animationDelay = `${Math.random() * 5}s`;
+            document.body.appendChild(bill);
+            bill.addEventListener('animationend', () => {
+                bill.remove();
+                createBill(billImages);
+            });
+        }
+    </script>
+</body>
+</html>
